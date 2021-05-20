@@ -1,24 +1,20 @@
 import express from 'express'
-var request = require ("request")
+import listEndpoints from 'express-list-endpoints'
 import cors from 'cors'
+var request = require ("request")
 
-// Defines the port the app will run on. Defaults to 8080, but can be 
-// overridden when starting the server. For example:
-//
-//   PORT=9000 npm start
 const port = process.env.PORT || 5000
 const app = express()
 
-// Add middlewares to enable cors and json body parsing
 app.use(cors())
 app.use(express.json())
 
-// Start defining your routes here
 app.get('/', (req, res) => {
-  res.send('Hello world')
+  res.send(listEndpoints(app))
 })
 
-app.get('/test', (req, res) => {
+// fetch sample data 
+app.get('/test-title', (req, res) => {
   request (
       'https://jsonplaceholder.typicode.com/todos/1',
       function(error, response, body) {
